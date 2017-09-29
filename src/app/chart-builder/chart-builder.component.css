@@ -1,0 +1,15 @@
+.chart-card {
+  border: 1px solid #aaa;
+  margin: 6px;
+}
+.chart-wrapper {
+  height: 70vh;
+}
+.reset-button {
+  display: inline-block;
+}
+.chart-control {
+  padding: 5px;
+  border-bottom: 1px solid #aaa;
+  margin: 0;
+}

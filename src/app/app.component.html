@@ -1,57 +1,5 @@
-<div *ngIf="loaded" class="row">
-  <div class="container">
-    <h2>Charts filtering</h2>
-    <br>
-      <div class="row control-panel">
-        <div class="col-md-6">
-          <label for="deviationInput">Set your deviation, %</label>
-          <input
-            #deviation
-            value="{{curDeviationValue}}"
-            id="deviationInput">
 
-          <button (click)="setDeviationValue(deviation.value)">Reset Deviation</button>
-        </div>
-        <div class="col-md-6">
-          <!--[formGroup]="form"-->
-          <form action="" >
-            <input
-              type="radio"
-              value="average"
-              name="method"
-              id="averageRadio"
-              checked="{{curDeviationMethod == 'average'}}"
-              (change)="setDeviationMethod($event)"
-            >
-            <label for="averageRadio">AVERAGE</label>
-
-            <input
-              type="radio"
-              value="median"
-              name="method"
-              id="medianRadio"
-              checked="{{curDeviationMethod == 'median'}}"
-              (change)="setDeviationMethod($event)"
-            >
-            <label for="medianRadio">MEDIAN</label>
-
-          </form>
-        </div>
-      </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="chart-wrapper" >
-          <canvas baseChart width="200" height="200" class="chart"
-                  [datasets]="lineChartData"
-                  [labels]="lineChartLabels"
-                  [colors]="lineChartColors"
-                  [options]="lineChartOptions"
-                  [legend]="lineChartLegend"
-                  [chartType]="lineChartType"
-          ></canvas>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="main-wrapper">
+  <app-home></app-home>
 </div>
 

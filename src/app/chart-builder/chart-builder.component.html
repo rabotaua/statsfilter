@@ -1,3 +1,56 @@
-<p>
-  chart-builder works!
-</p>
+<div *ngIf="loaded" class="chart-card">
+  <h4 class="chart-title">{{dataUrl}}</h4>
+  <div class="row chart-control">
+    <div class="col-md-7">
+      <input
+        #deviation
+        class=""
+        value="{{curDeviationValue}}"
+        (keyup.enter)="setDeviationValue(deviation.value)"
+        id="{{propertyToShow}}-deviationInput-{{dataUrl}}">
+      <button class="reset-button" (click)="setDeviationValue(deviation.value)">Reset Deviation</button>
+    </div>
+    <div class="col-md-5">
+      <form action="" >
+        <input
+          type="radio"
+          value="average"
+          name="{{propertyToShow}}-radio-{{dataUrl}}"
+          id="{{propertyToShow}}-averageRadio-{{dataUrl}}"
+          (change)="setDeviationMethod($event)"
+        >
+        <label for="{{propertyToShow}}-averageRadio-{{dataUrl}}">Average</label>
+
+        <input
+          type="radio"
+          value="median"
+          name="{{propertyToShow}}-radio-{{dataUrl}}"
+          id="{{propertyToShow}}-medianRadio-{{dataUrl}}"
+          checked="checked"
+          (change)="setDeviationMethod($event)"
+        >
+        <label for="{{propertyToShow}}-medianRadio-{{dataUrl}}">Median</label>
+
+        <input
+          type="radio"
+          value="median"
+          name="{{propertyToShow}}-radio-{{dataUrl}}"
+          id="{{propertyToShow}}-stanndardRadio-{{dataUrl}}"
+          (change)="setDeviationMethod($event)"
+        >
+        <label for="{{propertyToShow}}-stanndardRadio-{{dataUrl}}">Standard</label>
+
+      </form>
+    </div>
+  </div>
+  <div class="chart-wrapper" >
+    <canvas baseChart width="200" height="200" class="chart"
+            [datasets]="lineChartData"
+            [labels]="lineChartLabels"
+            [colors]="lineChartColors"
+            [options]="lineChartOptions"
+            [legend]="lineChartLegend"
+            [chartType]="lineChartType"
+    ></canvas>
+  </div>
+</div>

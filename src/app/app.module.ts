@@ -1,20 +1,22 @@
+// libraries
 import { BrowserModule } from '@angular/platform-browser';
-import {Component, NgModule} from '@angular/core';
-
-import { AppComponent } from './app.component';
-
+import { NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { TestComponent } from './test/test.component';
 
+// services
 import { FetchDataService } from './services/fetch-data.service';
-import {Http, HttpModule} from '@angular/http';
 
-// import { ChartBuilderComponent } from './chart-builder/chart-builder';
+// components
+import { AppComponent } from './app.component';
+import { ChartBuilderComponent } from './chart-builder/chart-builder.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponent
+    ChartBuilderComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

@@ -6,8 +6,8 @@ import 'rxjs/add/operator/map';
 export class FetchDataService {
 
   constructor(private http: Http) { }
-  getKeyPages() {
-    return this.http.get(`http://js.rabota.com.ua/nlb/sqlserver_general_statistics.json?v=` + Date.now())
+  getStatsData(url) {
+    return this.http.get('http://js.rabota.com.ua/nlb/' + url + '.json?v=' + Date.now())
       .map(response => response.json());
   }
 }

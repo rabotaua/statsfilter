@@ -1,0 +1,25 @@
+<div class="home-wrapper">
+  <div class="row">
+    <div *ngFor="let url of topPagesUrl" >
+
+      <div *ngIf="url !== 'toppages'" class="col-md-6">
+        <app-chart-builder
+          [dataUrl]="url"
+          [propertyToShow]="'val'"
+        ></app-chart-builder>
+      </div>
+
+      <div *ngIf="url === 'toppages'">
+        <div *ngFor="let property of propertiesToShow" class="col-md-6">
+          <app-chart-builder
+            [dataUrl]="url"
+            [propertyToShow]="property"
+          ></app-chart-builder>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+</div>
