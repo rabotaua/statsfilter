@@ -43,7 +43,7 @@
       </form>
     </div>
   </div>
-  <div class="chart-wrapper" >
+  <div class="chart-wrapper" [style.height]="resize()">
     <canvas baseChart width="200" height="200" class="chart"
             [datasets]="lineChartData"
             [labels]="lineChartLabels"

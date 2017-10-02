@@ -16,7 +16,7 @@ export class ChartBuilderComponent implements OnInit {
   initialData = [];
   loaded = false;
   curDeviationMethod: any = 'median';
-  curDeviationValue: Number = 20;
+  curDeviationValue: Number = 0;
 
   // chard setting and data nesting
   public lineChartData: Array<any>;
@@ -24,7 +24,19 @@ export class ChartBuilderComponent implements OnInit {
   public lineChartColors: Array<any>;
   public lineChartOptions: any = {
     responsive: true,
-    maintainAspectRatio: false
+    maintainAspectRatio: false,
+    scaledisplay: false,
+    scales: {
+      xAxes: [
+        {
+          display: false
+        }
+      ]
+    },
+    tooltips: {
+      mode: 'x'
+    },
+
   };
   public lineChartLegend = true;
   public lineChartType = 'bar';
@@ -105,12 +117,8 @@ export class ChartBuilderComponent implements OnInit {
 
   // returns an array of unique X-Axis values (time)
   getTimeStamps(data: Array<any>) {
-    // const timeStamps = data.map(item => new Date(item.minute).toLocaleTimeString());
-    // return Array.from(new Set(timeStamps));
-    let timeStamps = data.map(item => new Date(item.minute).toLocaleTimeString());
-    timeStamps = Array.from(new Set(timeStamps));
-    return new Array(timeStamps.length).fill(''); // removing time stamps for X Axis
-
+    const timeStamps = data.map(item => new Date(item.minute).toLocaleTimeString());
+    return Array.from(new Set(timeStamps));
   }
 
   // filtering switch-case handler
@@ -155,6 +163,13 @@ export class ChartBuilderComponent implements OnInit {
         break;
     }
     return indexes;
+  }
+
+
+  resize() {
+    if (this.lineChartData.length > 15) {
+      return '132.2vh';
+    }
   }
 
   constructor (private fetchDataService: FetchDataService) {}
