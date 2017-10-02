@@ -14,8 +14,8 @@ export const labelsToRemove = [
   // 'indices',
   // '_all'
   // 'Queue'
-  '/api/cvcount',
-  '/cv/0'
+  // '/api/cvcount',
+  // '/cv/0'
 ];
 export const labelsToKeep = [
   // 'Disk',

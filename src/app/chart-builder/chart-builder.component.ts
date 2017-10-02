@@ -18,7 +18,7 @@ export class ChartBuilderComponent implements OnInit {
   curDeviationMethod: any = 'median';
   curDeviationValue: Number = 20;
 
-  // nesting data for a chart
+  // chard setting and data nesting
   public lineChartData: Array<any>;
   public lineChartLabels: Array<any>;
   public lineChartColors: Array<any>;
@@ -73,6 +73,8 @@ export class ChartBuilderComponent implements OnInit {
       // action == true >> label is removed
       // action == false >> label is kept
       const labelPattern = action ? labelsToRemove : labelsToKeep;
+
+      // labelPattern.forEach((label, i) => value.includes(labelPattern[i]) ? !action :  action);
 
       for (let i = 0; i < labelPattern.length; i++) {
         if (value.includes(labelPattern[i])) { return !action; }
@@ -144,7 +146,7 @@ export class ChartBuilderComponent implements OnInit {
       case 'standard':
         const avg =  sum(array) / array.length; // average value
         const sqArr = array.map(x => (x - avg) * (x - avg)); // square deviation array
-        const sigma =  Math.sqrt(sum(sqArr) / array.length) * 4; // sigma calculation
+        const sigma =  Math.sqrt(sum(sqArr) / array.length) * 3; // sigma calculation
         getAbsoluteDeviation(sigma, this.curDeviationValue);
         break;
 
@@ -153,11 +155,6 @@ export class ChartBuilderComponent implements OnInit {
         break;
     }
     return indexes;
-
-    // array.forEach((item, i) => {
-    //   if ((Math.abs(item - criteria) / criteria) * 100 >= this.curDeviationValue) { indexes.push(i); }
-    // });
-    // if (!criteria) { criteria = 1; }
   }
 
   constructor (private fetchDataService: FetchDataService) {}
