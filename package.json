@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "deploy": "ng build --prod --base-href \"https://rabotaua.github.io/statsfilter\" && angular-cli-ghpages"
+    "deploy": "ng build --prod && angular-cli-ghpages"
   },
   "private": true,
   "dependencies": {
