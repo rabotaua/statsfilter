@@ -72,7 +72,7 @@ export class ChartBuilderComponent implements OnInit {
   }
 
   // returns array of objects. Each object = LABEL (page name) + ARRAY of values for corresponding label
-  // filtered with current deviation method & value
+
   getLabelValues(data: Array<any>) {
 
     // TODO avoid bullshit & optimize
@@ -165,7 +165,6 @@ export class ChartBuilderComponent implements OnInit {
     return indexes;
   }
 
-
   resize() {
     if (this.lineChartData.length > 15) {
       return '132.2vh';
@@ -173,9 +172,9 @@ export class ChartBuilderComponent implements OnInit {
   }
 
   constructor (private fetchDataService: FetchDataService) {}
+
   ngOnInit() {
     this.loadData();
-
   }
 
 }

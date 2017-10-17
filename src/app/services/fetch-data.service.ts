@@ -7,7 +7,8 @@ export class FetchDataService {
 
   constructor(private http: Http) { }
   getStatsData(url) {
-    return this.http.get('http://js.rabota.com.ua/nlb/' + url + '.json?v=' + Date.now())
+    return this.http
+      .get('http://js.rabota.com.ua/nlb/' + url + '.json?v=' + Date.now())
       .map(response => response.json());
   }
 }
