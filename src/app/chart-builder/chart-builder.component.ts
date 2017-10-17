@@ -167,7 +167,7 @@ export class ChartBuilderComponent implements OnInit {
 
   resize() {
     if (this.lineChartData.length > 15) {
-      return '132.2vh';
+      return '129.3vh';
     }
   }
 
