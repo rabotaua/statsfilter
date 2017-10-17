@@ -18,6 +18,8 @@ export class ChartBuilderComponent implements OnInit {
   curDeviationMethod: any = 'median';
   curDeviationValue: Number = 0;
 
+
+
   // chard setting and data nesting
   public lineChartData: Array<any>;
   public lineChartLabels: Array<any>;
@@ -47,7 +49,6 @@ export class ChartBuilderComponent implements OnInit {
       this.initialData = data;
       this.updateChart();
       this.loaded = true;
-
       // this.lineChartColors = this.getChartColors(this.lineChartData);
     });
   }
@@ -64,64 +65,52 @@ export class ChartBuilderComponent implements OnInit {
   updateChart() {
     this.lineChartData = this.getLabelValues(this.initialData);
     this.lineChartLabels = this.getTimeStamps(this.initialData);
-    // this.lineChartLabels = this.getTimeStamps(this.initialData);
-
     setTimeout(() => {
       this.chart.ngOnChanges({});
     });
   }
 
-  // returns array of objects. Each object = LABEL (page name) + ARRAY of values for corresponding label
+  // returns array of objects - {data: Array<number>, label: string}
 
-  getLabelValues(data: Array<any>) {
+  getLabelValues(initData: Array<any>) {
 
-    // TODO avoid bullshit & optimize
+    let data = initData;
 
-    // TODO encapsulate filtering & data parsing
+    data = data.filter(item => this.filterByLabels(item.key, true))
 
-    // filter labels: value = string to be checked | action = keep/remove
-    function filterLabels(value, action: Boolean = true) {
-
-      // action == true >> label is removed
-      // action == false >> label is kept
-      const labelPattern = action ? labelsToRemove : labelsToKeep;
-
-      // labelPattern.forEach((label, i) => value.includes(labelPattern[i]) ? !action :  action);
-
-      for (let i = 0; i < labelPattern.length; i++) {
-        if (value.includes(labelPattern[i])) { return !action; }
-      }
-      return action;
-    }
-
-    let labels = data.map(item => item['key']);
-    labels =  Array.from(new Set(labels)).filter(page => filterLabels(page, true));
-
-
-    let result = (
-      labels.map(page => {
-        const pageValues = data
-          .filter(item => item.key === page)
-          .map(item => item[`${this.propertyToShow}`] || item.val);
-
-        if (!!this.filterByDeviation(pageValues).length) {
-          return {data: pageValues, label: page};
+    const parsedData = this.parseData(data)
+    let resultREF = Object
+      .keys(parsedData)
+      .map( label => {
+        if (!!this.filterByDeviation(parsedData[label]).length) {
+          return {data: parsedData[label], label: label};
         }
-      }).filter(item => item) // WTF?!
-    );
-    if (result.length === 0) {
-      result = [{data: [], label: ''}];
+      })
+      .filter(i => i);
+
+    if (resultREF.length === 0) {
+      resultREF = [{data: [], label: ''}];
     }
-    return result;
+    return resultREF;
+  }
+
+  parseData(data: Array<any> ) {
+    return data
+      .reduce((acc, item) => {
+        return Object.assign(acc, {
+          [item.key]: acc.hasOwnProperty(item.key) && acc[item.key] ?
+            acc[item.key].concat(item[`${this.propertyToShow}`] || item.val) :
+            Array.of(item[`${this.propertyToShow}`] || item.val)});
+      }, {});
   }
 
   // returns an array of unique X-Axis values (time)
   getTimeStamps(data: Array<any>) {
-    const timeStamps = data.map(item => new Date(item.minute).toLocaleTimeString());
+    const timeStamps = data.map(item => new Date(item.minute).toTimeString().slice(0, 5));
     return Array.from(new Set(timeStamps));
   }
 
-  // filtering switch-case handler
+  // filtering switch-case handler. returns array of indexes of given array passed successfully
   filterByDeviation(array: Array<any>) {
 
     let criteria = 0;
@@ -163,6 +152,21 @@ export class ChartBuilderComponent implements OnInit {
         break;
     }
     return indexes;
+  }
+
+  // filter handler for labels strings | action = keep/remove
+  filterByLabels(value, action: Boolean = true) {
+
+    // action == true >> label is removed
+    // action == false >> label is kept
+    const labelPattern = action ? labelsToRemove : labelsToKeep;
+
+    // labelPattern.forEach((label, i) => value.includes(labelPattern[i]) ? !action :  action);
+
+    for (let i = 0; i < labelPattern.length; i++) {
+      if (value.includes(labelPattern[i])) { return !action; }
+    }
+    return action;
   }
 
   resize() {
